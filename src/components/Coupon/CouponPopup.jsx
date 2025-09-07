@@ -209,7 +209,7 @@ const CouponPopup = ({ category, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-      <div className=" max-w-3xl h-[70vh] rounded-2xl flex flex-col">
+      <div className=" max-w-3xl h-[75vh] rounded-2xl flex flex-col">
         {/* Header */}
         <div className="bg-gradient-to-r from-slate-900 via-blue-900 to-emerald-800 text-white p-2 rounded-t-2xl flex justify-between items-center">
           <div>
