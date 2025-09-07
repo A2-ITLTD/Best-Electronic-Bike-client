@@ -32,6 +32,11 @@ const CouponPopup = ({ category, onClose }) => {
         "/assets/coupon/2/TwoD.jpg",
       ],
       category: "Electric Mountain Bike",
+      features: [
+        "Top speed: 20–22 MPH",
+        "500W brushless geared motor (750W peak)",
+        "48V 7.8Ah (374Wh) removable lithium-ion battery",
+      ],
     },
     "Electric Bike": {
       id: "10",
@@ -47,6 +52,11 @@ const CouponPopup = ({ category, onClose }) => {
         "/assets/coupon/12/twelveC.jpg",
       ],
       category: "Electric Bike",
+      features: [
+        "Top speed 20MPH",
+        "Peak 500W motor (350W rated)",
+        "48V/7.8Ah battery, up to 40 miles range (Pedal-assist1)",
+      ],
     },
     "Electric Scooter": {
       id: "13",
@@ -62,6 +72,11 @@ const CouponPopup = ({ category, onClose }) => {
         "/assets/coupon/17/17C.jpg",
       ],
       category: "Electric Scooter",
+      features: [
+        "Max speed 15.5-20 MPH",
+        "Range up to 19 miles per charge",
+        "350W rear-wheel motor with sit-down design",
+      ],
     },
     "Folding Bike": {
       id: "20",
@@ -77,6 +92,11 @@ const CouponPopup = ({ category, onClose }) => {
         "/assets/coupon/27/27C.jpg",
       ],
       category: "Folding Bike",
+      features: [
+        "Top speed up to 25 MPH",
+        "Peak 1000W brushless geared motor",
+        "48V 10.5Ah removable battery with up to 45-mile range",
+      ],
     },
     "Commuter Bike": {
       id: "23",
@@ -92,6 +112,11 @@ const CouponPopup = ({ category, onClose }) => {
         "/assets/coupon/30/30C.jpg",
       ],
       category: "Commuter Bike",
+      features: [
+        "1-year limited warranty",
+        "Peak 750W brushless motor with top speed 20 MPH",
+        "360Wh removable lithium battery, 25-40 miles range",
+      ],
     },
     "Fat Tire Electric Bike": {
       id: "4",
@@ -108,6 +133,11 @@ const CouponPopup = ({ category, onClose }) => {
         "/assets/coupon/57/57D.jpg",
       ],
       category: "Fat Tire Electric Bike",
+      features: [
+        "1-year warranty with 24-hour customer support",
+        "Peak 800W motor with max speed up to 22 MPH",
+        "48V 10.4Ah battery, range: 20 miles pure electric / 60 miles pedal-assist",
+      ],
     },
   };
 
@@ -252,6 +282,15 @@ const CouponPopup = ({ category, onClose }) => {
                     </div>
                     <div className="inline-flex items-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-md">
                       Save {animatedDiscounts[couponData.id] || 0}% OFF
+                    </div>
+
+                    <div className="text-xs text-gray-600 space-y-0.5 mb-2 mt-1">
+                      {couponData.features.map((feature, index) => (
+                        <div key={index} className="flex items-start">
+                          <span className="text-green-600 mr-1">✓</span>
+                          {feature}
+                        </div>
+                      ))}
                     </div>
                   </div>
 
