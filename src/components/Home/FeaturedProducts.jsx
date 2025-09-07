@@ -165,16 +165,16 @@ const ProductCard = () => {
                   {truncateTitle(product.name)}
                 </h3>
 
-                <div className="mt-4 flex justify-between items-center">
+                <div className="mt-4 flex justify-between items-center ">
                   <a
                     href={`https://www.amazon.com/s?k=${encodeURIComponent(
                       product.name
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center bg-[#FF9900] hover:bg-[#e88a00] text-white text-sm font-bold py-2 px-4 rounded-lg transition-colors shadow-md"
+                    className="flex items-center bg-[#FF9900] hover:bg-[#e88a00] text-white text-sm font-bold py-2 px-2 rounded-lg transition-colors shadow-md mr-2.5"
                   >
-                    <span className="mr-1 text-lg">
+                    <span className="mr-0.5 mt-0.5 text-lg">
                       <AiFillAmazonCircle />
                     </span>
                     Buy on Amazon
