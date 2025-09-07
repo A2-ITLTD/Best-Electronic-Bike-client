@@ -10,7 +10,7 @@ const ProductCard = () => {
   // Helper function to get correct image URL
   const getImageUrl = (path) => {
     if (path.startsWith("/assets/")) {
-      return `http://localhost:5000${path}`;
+      return `https://best-e-bike-server.vercel.app/${path}`;
     }
     return path;
   };

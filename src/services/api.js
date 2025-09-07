@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://best-e-bike-server.vercel.app";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -9,7 +9,7 @@ const api = axios.create({
 
 export const fetchProducts = async () => {
   try {
-    const response = await api.get("/products");
+    const response = await api.get("/api/products");
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -19,7 +19,7 @@ export const fetchProducts = async () => {
 
 export const fetchProduct = async (id) => {
   try {
-    const response = await api.get(`/products/${id}`);
+    const response = await api.get(`/api/products/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching product:", error);

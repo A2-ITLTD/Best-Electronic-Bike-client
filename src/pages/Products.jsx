@@ -34,7 +34,7 @@ const Products = () => {
 
   const getImageUrl = (path) => {
     if (path.startsWith("/assets/")) {
-      return `http://localhost:5000${path}`;
+      return `https://best-e-bike-server.vercel.app/${path}`;
     }
     return path;
   };
@@ -43,6 +43,7 @@ const Products = () => {
     const getProducts = async () => {
       try {
         const data = await fetchProducts();
+        console.log("Fetched products:", data);
         setProducts(data.products);
         setFilteredProducts(data.products);
 

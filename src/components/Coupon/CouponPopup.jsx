@@ -9,7 +9,7 @@ import {
   Clock,
 } from "lucide-react";
 import { AiFillAmazonCircle } from "react-icons/ai";
-import Logo from "../shared/Logo";
+import Logo from "./../Shared/Logo";
 
 const CouponPopup = ({ category, onClose }) => {
   const [couponList, setCouponList] = useState([]);
