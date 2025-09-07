@@ -34,7 +34,7 @@ const Products = () => {
 
   const getImageUrl = (path) => {
     if (path.startsWith("/assets/")) {
-      return `https://best-e-bike-server.vercel.app/${path}`;
+      return `https://best-electronic-bike-server-y888.vercel.app/${path}`;
     }
     return path;
   };
@@ -370,7 +370,6 @@ const Products = () => {
               }`}
             >
               {currentProducts.map((product) => {
-                console.log("alibabaUrl:", product.alibabaUrl); // Add this line
                 const currentImageIndex = selectedImages[product.id] || 0;
                 {
                   /* Mobile Category Dropdown */
@@ -557,14 +556,16 @@ const Products = () => {
                           </span>
                         )}
 
+                        {/* <Link to={product.alibabaUrl}> */}
                         <button
-                          onClick={() => {
-                            window.open(product.alibabaUrl, "_blank");
-                          }}
+                          onClick={() =>
+                            window.open(product.alibabaUrl, "_blank")
+                          }
                           className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-2 px-3 rounded-lg mb-4 transition-colors shadow-md hover:shadow-lg"
                         >
                           Check Price
                         </button>
+                        {/* </Link> */}
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
                           alt="Amazon"
