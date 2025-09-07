@@ -1,3 +1,4 @@
+import { LocationEdit } from "lucide-react";
 import React from "react";
 
 const Contact = () => {
@@ -32,7 +33,7 @@ const Contact = () => {
           <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Join millions who have trusted{" "}
             <span className="font-semibold text-blue-600">
-              Best Electric BikesGuide.org
+              info@bestbikereview.com
             </span>{" "}
             to make smarter, more informed purchasing decisions.
           </p>
@@ -353,7 +354,7 @@ const Contact = () => {
                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                       ></path>
                     </svg>
-                    suggestions@Best Electric Bikesguide.org
+                    info@bestbikereview.com
                   </a>
                 </div>
 
@@ -376,8 +377,34 @@ const Contact = () => {
                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                       ></path>
                     </svg>
-                    (512) 961-1233
+                    ‪+1 808-301-5039‬
                   </a>
+                </div>
+                <div className="bg-white/10 p-4 rounded-xl">
+                  <h3 className="font-semibold mb-2 text-blue-100">Address</h3>
+                  <div className="text-white font-medium flex items-start">
+                    <svg
+                      className="w-4 h-4 mr-2 mt-1 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5 9 6.343 9 8s1.343 3 3 3z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19.5 8c0 7.5-7.5 13-7.5 13S4.5 15.5 4.5 8a7.5 7.5 0 1115 0z"
+                      />
+                    </svg>
+                    532 Stone Rd Suite F <br />
+                    Benicia, CA 94510
+                  </div>
                 </div>
               </div>
 

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export const axiosSecure = axios.create({
-  baseURL: "https://best-e-bike-server.vercel.app",
+  baseURL: "https://best-electronic-bike-server-y888.vercel.app/",
   withCredentials: true,
 });
 

@@ -56,15 +56,15 @@ const Footer = () => {
             <div className="space-y-3 text-gray-300">
               <div className="flex items-center space-x-3 hover:text-white transition">
                 <Phone className="h-5 w-5 text-blue-400" />
-                <span>+1 (555) 123-4567</span>
+                <span>‪+1 808-301-5039‬</span>
               </div>
               <div className="flex items-center space-x-3 hover:text-white transition">
                 <Mail className="h-5 w-5 text-green-400" />
-                <span>info@electricride.com</span>
+                <span>info@bestbikereview.com</span>
               </div>
               <div className="flex items-center space-x-3 hover:text-white transition">
                 <MapPin className="h-5 w-5 text-yellow-400" />
-                <span>123 Electric Ave, Tech City</span>
+                <span>532 Stone Rd Suite F Benicia, CA 94510</span>
               </div>
             </div>
           </div>

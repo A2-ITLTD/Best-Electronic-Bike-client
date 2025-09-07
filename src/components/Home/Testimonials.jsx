@@ -1,5 +1,6 @@
 import React from "react";
 import { Star, Quote, Zap, Heart, TrendingUp } from "lucide-react";
+import { StatsSection } from "./StatsSection";
 
 const Testimonials = () => {
   const testimonials = [
@@ -127,7 +128,7 @@ const Testimonials = () => {
         </div>
 
         {/* Stats section - with hover effects */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-gray-200">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-gray-200">
           <div className="text-center hover:transform hover:scale-105 transition-transform duration-300 cursor-default">
             <div className="text-4xl font-bold text-blue-600 mb-2 group-hover:text-blue-700 transition-colors duration-300">
               5,000+
@@ -160,7 +161,8 @@ const Testimonials = () => {
               Miles Ridden
             </div>
           </div>
-        </div>
+        </div> */}
+        <StatsSection />
       </div>
     </section>
   );

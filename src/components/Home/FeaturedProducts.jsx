@@ -30,6 +30,7 @@ const ProductCard = () => {
             image: "/assets/2/TwoA.jpg",
             bestseller: true,
             savePercentage: 40,
+            alibabaUrl: "https://amzn.to/41CmCwf",
           },
           {
             id: "58",
@@ -42,6 +43,7 @@ const ProductCard = () => {
             image: "/assets/2/TwoB.jpg",
             bestseller: false,
             savePercentage: 31,
+            alibabaUrl: "https://amzn.to/46rjwOk",
           },
           {
             id: "59",
@@ -54,6 +56,7 @@ const ProductCard = () => {
             image: "/assets/2/TwoC.jpg",
             bestseller: true,
             savePercentage: 28,
+            alibabaUrl: "https://amzn.to/4mVUFbi",
           },
           {
             id: "60",
@@ -66,6 +69,7 @@ const ProductCard = () => {
             image: "/assets/2/TwoD.jpg",
             bestseller: false,
             savePercentage: 31,
+            alibabaUrl: "https://amzn.to/46oLgDb",
           },
         ];
         setProducts(mockProducts);
@@ -167,10 +171,7 @@ const ProductCard = () => {
 
                 <div className="mt-4 flex justify-between items-center ">
                   <a
-                    href={`https://www.amazon.com/s?k=${encodeURIComponent(
-                      product.name
-                    )}`}
-                    target="_blank"
+                    onClick={() => window.open(product.alibabaUrl, "_blank")}
                     rel="noopener noreferrer"
                     className="flex items-center bg-[#FF9900] hover:bg-[#e88a00] text-white text-sm font-bold py-2 px-2 rounded-lg transition-colors shadow-md mr-2.5"
                   >

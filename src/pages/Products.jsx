@@ -584,24 +584,24 @@ const Products = () => {
             {/* Pagination */}
             {filteredProducts.length > 0 && (
               <div className="flex justify-center mt-10">
-                <nav className="flex items-center space-x-3">
+                <nav className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 flex-wrap justify-center gap-2 sm:gap-0">
                   <button
                     onClick={prevPage}
                     disabled={currentPage === 1}
-                    className={`px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 shadow-sm ${
+                    className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium flex items-center gap-1 sm:gap-2 transition-all duration-200 shadow-sm text-sm sm:text-base ${
                       currentPage === 1
                         ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                         : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700"
                     }`}
                   >
-                    ← Previous
+                    <span className="hidden sm:inline">←</span> Prev
                   </button>
 
                   {getPaginationRange().map((page, index) => (
                     <button
                       key={index}
                       onClick={() => typeof page === "number" && paginate(page)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                         currentPage === page
                           ? "bg-blue-600 text-white shadow-md"
                           : page === "..."
@@ -617,13 +617,13 @@ const Products = () => {
                   <button
                     onClick={nextPage}
                     disabled={currentPage === totalPages}
-                    className={`px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-all duration-200 shadow-sm ${
+                    className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium flex items-center gap-1 sm:gap-2 transition-all duration-200 shadow-sm text-sm sm:text-base ${
                       currentPage === totalPages
                         ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                         : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700"
                     }`}
                   >
-                    Next →
+                    Next <span className="hidden sm:inline">→</span>
                   </button>
                 </nav>
               </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const posts = [
   {
@@ -65,6 +66,12 @@ const categories = [
 ];
 
 const Blog = () => {
+  const navigate = useNavigate();
+
+  const handleReadMore = (postId) => {
+    navigate(`/blog/${postId}`);
+  };
+
   return (
     <div className="bg-white text-gray-900 min-h-screen">
       <div className="max-w-6xl mx-auto py-10 px-6 lg:px-0 flex flex-col lg:flex-row gap-10">
@@ -79,7 +86,10 @@ const Blog = () => {
               />
               <h2 className="text-2xl font-semibold">{post.title}</h2>
               <p className="text-sm text-gray-500">{post.date}</p>
-              <button className="inline-block text-blue-600 hover:underline font-medium cursor-default">
+              <button
+                onClick={() => handleReadMore(post.id)}
+                className="inline-block text-blue-600 hover:underline font-medium cursor-pointer"
+              >
                 Read More
               </button>
               <hr className="mt-6" />
@@ -95,7 +105,8 @@ const Blog = () => {
               {topPosts.map((tp) => (
                 <li
                   key={tp.id}
-                  className="text-gray-800 hover:text-blue-600 transition cursor-default"
+                  className="text-gray-800 hover:text-blue-600 transition cursor-pointer"
+                  onClick={() => handleReadMore(tp.id)}
                 >
                   • {tp.title}
                 </li>
@@ -109,7 +120,7 @@ const Blog = () => {
               {categories.map((cat) => (
                 <li
                   key={cat}
-                  className="text-gray-800 hover:text-blue-600 transition cursor-default"
+                  className="text-gray-800 hover:text-blue-600 transition cursor-pointer"
                 >
                   • {cat}
                 </li>
