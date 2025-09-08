@@ -139,17 +139,123 @@ const CouponPopup = ({ category, onClose }) => {
         "48V 10.4Ah battery, range: 20 miles pure electric / 60 miles pedal-assist",
       ],
     },
+    "Hybrid Bike": {
+      id: "32",
+      name: "Schwinn Marshall Electric Hybrid E-Bike",
+      brand: "Schwinn",
+      price: 1399.99,
+      originalPrice: 1459.99,
+      rating: 8.0,
+      reviews: 110,
+      images: [
+        "/assets/coupon/44/44A.jpg",
+        "/assets/coupon/44/44B.jpg",
+        "/assets/coupon/44/44C.jpg",
+        "/assets/coupon/44/44D.jpg",
+      ],
+      category: "Hybrid Bike",
+      features: [
+        "21-inch aluminum hybrid frame",
+        "27.5-inch wheels for riders 5'8\" to 6'4\"",
+        "Integrated 288Wh downtube battery with up to 35 miles range",
+      ],
+    },
+    "All Terrain Electric Bike": {
+      id: "72",
+      name: 'Folding Electric Bike for Adults with Peak 1000W Motor, 48V 20AH Battery up to 30MPH 80 Miles, 20" Fat Tire All Terrain Electric Bike, Front Suspension 7-Speed Commuter E Bike, Step-Thru, UL Certified',
+      brand: "EUYBIKE",
+      price: 664.99,
+      originalPrice: 699.99,
+      rating: 9.4,
+      reviews: 127,
+      images: [
+        "/assets/coupon/94/94A.jpg",
+        "/assets/coupon/94/94B.jpg",
+        "/assets/coupon/94/94C.jpg",
+        "/assets/coupon/94/94D.jpg",
+      ],
+      category: "All Terrain Electric Bike",
+      features: [
+        "750W (Peak 1000W) brushless motor, top speed 30 MPH",
+        "48V 20Ah removable lithium-ion battery, range 40-80 miles",
+        "Front fork suspension for smooth riding",
+      ],
+    },
+    "City Electric Bike": {
+      id: "46",
+      name: 'Electric Bike for Adults 1350W Peak, 48V 20AH Battery Ebike, 26" Fat Tire Full Suspension Electric Mountain Bike, 80 Miles Range, 28 MPH, 8 Speed, Torque Sensor, Labrador Pro',
+      brand: "PUCKIPUPPY",
+      price: 1399.99,
+      originalPrice: 1399.99,
+      rating: 9.0,
+      reviews: 208,
+      images: [
+        "/assets/coupon/65/65A.jpg",
+        "/assets/coupon/65/65B.jpg",
+        "/assets/coupon/65/65C.jpg",
+        "/assets/coupon/65/65D.jpg",
+      ],
+      category: "City Electric Bike",
+      features: [
+        "1350W peak brushless rear hub motor with 28MPH top speed",
+        "48V 20AH hidden removable battery with 40-80 miles range",
+        '26"x4" puncture-proof fat tires for all-terrain stability',
+      ],
+    },
+    "Motorized Electric Bike": {
+      id: "69",
+      name: 'MOONCOOL Electric Tricycle for Adults, 20" x 4" Fat Tire Electric Trike, 48V 500W Motorized Electric Bicycle Bikes, 3 Wheels 7 Speed Ebike with Removable Battery, Aluminum Frame & Large Basket',
+      brand: "MOONCOOL",
+      price: 1299.0,
+      originalPrice: 1299.0,
+      rating: 9.0,
+      reviews: 22,
+      images: [
+        "/assets/coupon/91/91A.jpg",
+        "/assets/coupon/91/91B.jpg",
+        "/assets/coupon/91/91C.jpg",
+        "/assets/coupon/91/91D.jpg",
+      ],
+      category: "Motorized Electric Bike",
+      features: [
+        "UL2849 and UL2272 certified battery for safety and reliability",
+        "6061 aluminum frame for strength and longevity",
+        "48V 14.5Ah removable battery with 30-45 miles range",
+      ],
+    },
+    "Default Bike": {
+      id: "33",
+      name: 'Blaze 16" Electric Bike for Adults/Teens, Peak 1200W, 55-75 Miles, 499WH Fat Tire Ebike, 25Mph Full Suspension Electric Motorcycle',
+      brand: "ACTBEST",
+      price: 449.99,
+      originalPrice: 699.99,
+      rating: 9.5,
+      reviews: 29,
+      images: [
+        "/assets/coupon/45/45A.jpg",
+        "/assets/coupon/45/45B.jpg",
+        "/assets/coupon/45/45C.jpg",
+        "/assets/coupon/45/45D.jpg",
+      ],
+      category: "Electric Bike",
+      features: [
+        "16-inch carbon steel frame ideal for teens and adults under 5'2\"",
+        "Dual suspension system with 4 shock absorbers",
+        "1200W peak motor with 25 mph top speed",
+      ],
+    },
   };
 
   // Load matched coupons
   useEffect(() => {
-    if (category) {
+    if (category && category !== "All") {
       const matched = Object.values(products).filter(
         (p) => p.category === category
       );
       setCouponList(matched);
     } else {
-      setCouponList(Object.values(products));
+      // Show only the ACTBEST Blaze bike when "All" is selected
+      setCouponList([products["Default Bike"]]);
     }
   }, [category]);
 
@@ -230,11 +336,11 @@ const CouponPopup = ({ category, onClose }) => {
         </div>
 
         {/* Body */}
-        <div className="bg-gradient-to-br from-slate-50 to-blue-50 p-3 space-y-6 rounded-b-2xl flex-1 overflow-hidden">
+        <div className="bg-gradient-to-br from-slate-50 to-blue-50 p-3 space-y-6 rounded-b-2xl flex-1 overflow-auto">
           {couponList.map((couponData) => (
             <div
               key={couponData.id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200/50 h-full flex flex-col"
+              className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200/50 h-full flex flex-col relative"
             >
               {/* Discount Ribbon */}
               <div className="absolute -top-2 -right-10 bg-gradient-to-r from-red-500 to-orange-500 text-white text-sm font-bold px-10 py-1 transform rotate-45 z-20 shadow-md">
@@ -280,7 +386,7 @@ const CouponPopup = ({ category, onClose }) => {
                         ({couponData.reviews.toLocaleString()})
                       </span>
                     </div>
-                    <div className="inline-flex items-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-md">
+                    <div className="inline-flex items-center bg-gradient-to-r from-green-500 to-green-900 text-white px-2 py-1 rounded-full text-xs font-bold shadow-md">
                       Save {animatedDiscounts[couponData.id] || 0}% OFF
                     </div>
 
