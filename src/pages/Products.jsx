@@ -14,8 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../services/api";
 import CouponPopup from "../components/Coupon/CouponPopup";
-import { Helmet } from "@vuer-ai/react-helmet-async";
-
+import { Helmet } from "react-helmet-async";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,12 +43,12 @@ const Products = () => {
       try {
         const data = await fetchProducts();
         console.log("Fetched products:", data);
-        setProducts(data.products);
-        setFilteredProducts(data.products);
+        setProducts(data?.products);
+        setFilteredProducts(data?.products);
 
         const initialSelectedImages = {};
-        data.products.forEach((product) => {
-          initialSelectedImages[product.id] = 0;
+        data?.products?.forEach((product) => {
+          initialSelectedImages[product?.id] = 0;
         });
         setSelectedImages(initialSelectedImages);
       } catch (error) {
@@ -82,12 +81,12 @@ const Products = () => {
 
     filtered = filtered.filter(
       (product) =>
-        product.price >= priceRange[0] && product.price <= priceRange[1]
+        product?.price >= priceRange[0] && product.price <= priceRange[1]
     );
 
     if (selectedCategory !== "All") {
       filtered = filtered.filter(
-        (product) => product.category === selectedCategory
+        (product) => product?.category === selectedCategory
       );
       setPageTitle(`2025 Best ${selectedCategory}`);
     } else {
@@ -118,10 +117,10 @@ const Products = () => {
   const changeProductImage = (productId, direction) => {
     setSelectedImages((prev) => {
       const currentIndex = prev[productId];
-      const product = products.find((p) => p.id === productId);
-      if (!product || !product.images) return prev;
+      const product = products?.find((p) => p?.id === productId);
+      if (!product || !product?.images) return prev;
 
-      const totalImages = product.images.length;
+      const totalImages = product?.images?.length;
       let newIndex;
 
       if (direction === "next") {
@@ -150,7 +149,7 @@ const Products = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const totalPages = Math.ceil(filteredProducts?.length / PRODUCTS_PER_PAGE);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const nextPage = () => {
@@ -191,8 +190,8 @@ const Products = () => {
   };
 
   const truncateTitle = (title, maxLength = 80) => {
-    if (title.length <= maxLength) return title;
-    return title.substring(0, maxLength) + "...";
+    if (title?.length <= maxLength) return title;
+    return title?.substring(0, maxLength) + "...";
   };
 
   const categories = ["All", ...new Set(products.map((p) => p.category))];
@@ -200,7 +199,7 @@ const Products = () => {
   const getKeySpecifications = (product) => {
     const specs = [];
 
-    if (product.specifications) {
+    if (product?.specifications) {
       if (product.specifications.motor)
         specs.push(`Motor: ${product.specifications.motor}`);
       if (product.specifications.battery)
@@ -292,7 +291,7 @@ const Products = () => {
                   </label>
                   <select
                     value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
+                    onChange={(e) => setSortBy(e?.target?.value)}
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="rating-high">Rating</option>
@@ -352,7 +351,7 @@ const Products = () => {
                   onChange={(e) => handleCategorySelect(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  {categories.map((category, index) => (
+                  {categories?.map((category, index) => (
                     <option key={index} value={category}>
                       {category}
                     </option>

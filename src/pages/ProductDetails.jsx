@@ -23,7 +23,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { fetchProduct } from "../services/api";
-import { Helmet } from "@vuer-ai/react-helmet-async";
+import { Helmet } from "react-helmet-async";
 
 const ProductDetails = () => {
   const { id } = useParams();
