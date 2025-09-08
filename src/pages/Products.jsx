@@ -1,4 +1,3 @@
-// components/Products.jsx
 import React, { useState, useEffect } from "react";
 import {
   Filter,
@@ -15,6 +14,7 @@ import { Link } from "react-router-dom";
 import { fetchProducts } from "../services/api";
 import CouponPopup from "../components/Coupon/CouponPopup";
 import { Helmet } from "react-helmet-async";
+
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,6 +33,7 @@ const Products = () => {
   const BASE_URL = "https://best-electronic-bike-server-y888.vercel.app";
 
   const getImageUrl = (path) => {
+    if (!path) return "https://via.placeholder.com/300x200?text=No+Image";
     if (path.startsWith("/assets/")) {
       return `${BASE_URL}${path}`;
     }
@@ -44,12 +45,14 @@ const Products = () => {
       try {
         const data = await fetchProducts();
         console.log("Fetched products:", data);
-        setProducts(data?.products);
-        setFilteredProducts(data?.products);
+        setProducts(data?.products || []);
+        setFilteredProducts(data?.products || []);
 
         const initialSelectedImages = {};
         data?.products?.forEach((product) => {
-          initialSelectedImages[product?.id] = 0;
+          if (product?.id) {
+            initialSelectedImages[product.id] = 0;
+          }
         });
         setSelectedImages(initialSelectedImages);
       } catch (error) {
@@ -63,13 +66,13 @@ const Products = () => {
   }, []);
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category || "All");
 
     if (category === "All") {
       return;
     }
 
-    setCouponCategory(category);
+    setCouponCategory(category || "");
     setShowCoupon(true);
   };
 
@@ -78,11 +81,12 @@ const Products = () => {
   };
 
   useEffect(() => {
-    let filtered = products;
+    let filtered = products || [];
 
     filtered = filtered.filter(
       (product) =>
-        product?.price >= priceRange[0] && product.price <= priceRange[1]
+        (product?.price || 0) >= priceRange[0] &&
+        (product?.price || 0) <= priceRange[1]
     );
 
     if (selectedCategory !== "All") {
@@ -97,17 +101,17 @@ const Products = () => {
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "price-low":
-          return a.price - b.price;
+          return (a?.price || 0) - (b?.price || 0);
         case "price-high":
-          return b.price - a.price;
+          return (b?.price || 0) - (a?.price || 0);
         case "rating-high":
-          return b.rating - a.rating;
+          return (b?.rating || 0) - (a?.rating || 0);
         case "popularity":
-          return b.reviews - a.reviews;
+          return (b?.reviews || 0) - (a?.reviews || 0);
         case "category":
-          return a.category.localeCompare(b.category);
+          return (a?.category || "").localeCompare(b?.category || "");
         default:
-          return b.rating - a.rating;
+          return (b?.rating || 0) - (a?.rating || 0);
       }
     });
 
@@ -117,13 +121,14 @@ const Products = () => {
 
   const changeProductImage = (productId, direction) => {
     setSelectedImages((prev) => {
-      const currentIndex = prev[productId];
+      const currentIndex = prev[productId] || 0;
       const product = products?.find((p) => p?.id === productId);
       if (!product || !product?.images) return prev;
 
-      const totalImages = product?.images?.length;
-      let newIndex;
+      const totalImages = product?.images?.length || 0;
+      if (totalImages === 0) return prev;
 
+      let newIndex;
       if (direction === "next") {
         newIndex = (currentIndex + 1) % totalImages;
       } else {
@@ -146,18 +151,20 @@ const Products = () => {
 
   const indexOfLastProduct = currentPage * PRODUCTS_PER_PAGE;
   const indexOfFirstProduct = indexOfLastProduct - PRODUCTS_PER_PAGE;
-  const currentProducts = filteredProducts.slice(
+  const currentProducts = filteredProducts?.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
-  const totalPages = Math.ceil(filteredProducts?.length / PRODUCTS_PER_PAGE);
+  const totalPages = Math.ceil(
+    (filteredProducts?.length || 0) / PRODUCTS_PER_PAGE
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const nextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
   };
   const prevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
   const getPaginationRange = () => {
@@ -191,11 +198,15 @@ const Products = () => {
   };
 
   const truncateTitle = (title, maxLength = 80) => {
+    if (!title) return "Untitled Product";
     if (title?.length <= maxLength) return title;
     return title?.substring(0, maxLength) + "...";
   };
 
-  const categories = ["All", ...new Set(products.map((p) => p.category))];
+  const categories = [
+    "All",
+    ...new Set(products?.map((p) => p?.category || "Other")),
+  ];
 
   const getKeySpecifications = (product) => {
     const specs = [];
@@ -217,7 +228,7 @@ const Products = () => {
         specs.push(`Frame: ${product.specifications.frameMaterial}`);
     }
 
-    if (specs.length < 3 && product.features && product.features.length > 0) {
+    if (specs.length < 3 && product?.features && product.features.length > 0) {
       const additionalSpecs = product.features.slice(0, 5 - specs.length);
       specs.push(...additionalSpecs);
     }

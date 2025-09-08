@@ -34,7 +34,7 @@ const ProductDetails = () => {
   const BASE_URL = "https://best-electronic-bike-server-y888.vercel.app";
 
   const getImageUrl = (path) => {
-    if (!path) return "";
+    if (!path) return "https://via.placeholder.com/600x400?text=No+Image";
     if (path.startsWith("/assets/")) {
       return `${BASE_URL}${path}`;
     }
@@ -45,7 +45,7 @@ const ProductDetails = () => {
     const getProduct = async () => {
       try {
         const data = await fetchProduct(id);
-        setProduct(data);
+        setProduct(data || null);
       } catch (error) {
         console.error("Error fetching product:", error);
       } finally {
@@ -58,13 +58,13 @@ const ProductDetails = () => {
 
   const nextImage = () => {
     setSelectedImageIndex((prev) =>
-      prev === product.images.length - 1 ? 0 : prev + 1
+      prev === (product?.images?.length || 1) - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
     setSelectedImageIndex((prev) =>
-      prev === 0 ? product.images.length - 1 : prev - 1
+      prev === 0 ? (product?.images?.length || 1) - 1 : prev - 1
     );
   };
 
@@ -95,39 +95,46 @@ const ProductDetails = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-blue-50 py-6">
       <Helmet>
         <title>
-          {product.seo?.title || `${product.name} - Best Electric Bike 2025`}
+          {product?.seo?.title ||
+            `${product?.name || "Product"} - Best Electric Bike 2025`}
         </title>
         <meta
           name="description"
           content={
-            product.seo?.description ||
-            `${product.name}. ${product.description?.substring(0, 160)}...`
+            product?.seo?.description ||
+            `${product?.name || "Product"}. ${
+              product?.description?.substring(0, 160) || ""
+            }...`
           }
         />
         <meta
           name="keywords"
           content={
-            product.seo?.keywords ||
-            `${product.brand}, ${product.category}, electric bike, e-bike, ${product.name}`
+            product?.seo?.keywords ||
+            `${product?.brand || ""}, ${
+              product?.category || ""
+            }, electric bike, e-bike, ${product?.name || ""}`
           }
         />
 
         {/* Open Graph tags */}
         <meta
           property="og:title"
-          content={product.seo?.title || product.name}
+          content={product?.seo?.title || product?.name || "Best Electric Bike"}
         />
         <meta
           property="og:description"
           content={
-            product.seo?.description ||
-            `${product.name}. ${product.description?.substring(0, 160)}...`
+            product?.seo?.description ||
+            `${product?.name || "Product"}. ${
+              product?.description?.substring(0, 160) || ""
+            }...`
           }
         />
-        <meta property="og:image" content={getImageUrl(product.images[0])} />
+        <meta property="og:image" content={getImageUrl(product?.images?.[0])} />
         <meta
           property="og:url"
-          content={`${SITE_URL}/products/${product.id}`}
+          content={`${SITE_URL}/products/${product?.id || ""}`}
         />
         <meta property="og:type" content="product" />
 
@@ -135,40 +142,51 @@ const ProductDetails = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content={product.seo?.title || product.name}
+          content={product?.seo?.title || product?.name || "Best Electric Bike"}
         />
         <meta
           name="twitter:description"
           content={
-            product.seo?.description ||
-            `${product.name}. ${product.description?.substring(0, 160)}...`
+            product?.seo?.description ||
+            `${product?.name || "Product"}. ${
+              product?.description?.substring(0, 160) || ""
+            }...`
           }
         />
-        <meta name="twitter:image" content={getImageUrl(product.images[0])} />
+        <meta
+          name="twitter:image"
+          content={getImageUrl(product?.images?.[0])}
+        />
 
         {/* Canonical URL */}
-        <link rel="canonical" href={`${SITE_URL}/products/${product.id}`} />
+        <link
+          rel="canonical"
+          href={`${SITE_URL}/products/${product?.id || ""}`}
+        />
 
         {/* Structured Data for Google SEO */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org/",
             "@type": "Product",
-            name: product.name,
-            image: product.images.map((img) => getImageUrl(img)),
-            description: product.seo?.description || product.description,
-            sku: product.id,
+            name: product?.name || "Product",
+            image: product?.images?.map((img) => getImageUrl(img)) || [],
+            description:
+              product?.seo?.description ||
+              product?.description ||
+              "No description",
+            sku: product?.id || "",
             brand: {
               "@type": "Brand",
-              name: product.brand,
+              name: product?.brand || "Unknown",
             },
             offers: {
               "@type": "Offer",
-              url: `https://yourebsite.com/products/${product.id}`,
+              url: `${SITE_URL}/products/${product?.id || ""}`,
               priceCurrency: "USD",
-              price: product.price,
+              price: product?.price || "0",
               priceValidUntil: "2025-12-31",
-              availability: product.inStock
+              availability: product?.inStock
                 ? "https://schema.org/InStock"
                 : "https://schema.org/OutOfStock",
               seller: {
@@ -178,25 +196,25 @@ const ProductDetails = () => {
             },
             aggregateRating: {
               "@type": "AggregateRating",
-              ratingValue: product.rating,
-              reviewCount: product.reviews,
+              ratingValue: product?.rating || "0",
+              reviewCount: product?.reviews || "0",
               bestRating: "10",
               worstRating: "1",
             },
             review:
-              product.userReviews?.map((review) => ({
+              product?.userReviews?.map((review) => ({
                 "@type": "Review",
                 reviewRating: {
                   "@type": "Rating",
-                  ratingValue: review.rating,
+                  ratingValue: review?.rating || "0",
                   bestRating: "5",
                 },
                 author: {
                   "@type": "Person",
-                  name: review.username,
+                  name: review?.username || "Anonymous",
                 },
-                reviewBody: review.text,
-                datePublished: review.date,
+                reviewBody: review?.text || "",
+                datePublished: review?.date || "",
               })) || [],
           })}
         </script>
@@ -238,7 +256,7 @@ const ProductDetails = () => {
                 />
               </div>
 
-              {product.images.length > 1 && (
+              {product.images?.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
