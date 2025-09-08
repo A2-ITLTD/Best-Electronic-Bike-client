@@ -30,12 +30,13 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isWishlisted, setIsWishlisted] = useState(false);
 
-  // Helper function to get correct image URL
+  const BASE_URL = "https://best-electronic-bike-server-y888.vercel.app";
+
   const getImageUrl = (path) => {
+    if (!path) return "";
     if (path.startsWith("/assets/")) {
-      return `https://best-electronic-bike-server-y888.vercel.app/${path}`;
+      return `${BASE_URL}${path}`;
     }
     return path;
   };
@@ -89,7 +90,7 @@ const ProductDetails = () => {
       </div>
     );
   }
-
+  const SITE_URL = "https://best-electric-bike.vercel.app";
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-blue-50 py-6">
       <Helmet>
@@ -126,7 +127,7 @@ const ProductDetails = () => {
         <meta property="og:image" content={getImageUrl(product.images[0])} />
         <meta
           property="og:url"
-          content={`https://yourebsite.com/products/${product.id}`}
+          content={`${SITE_URL}/products/${product.id}`}
         />
         <meta property="og:type" content="product" />
 
@@ -146,10 +147,7 @@ const ProductDetails = () => {
         <meta name="twitter:image" content={getImageUrl(product.images[0])} />
 
         {/* Canonical URL */}
-        <link
-          rel="canonical"
-          href={`https://yourebsite.com/products/${product.id}`}
-        />
+        <link rel="canonical" href={`${SITE_URL}/products/${product.id}`} />
 
         {/* Structured Data for Google SEO */}
         <script type="application/ld+json">
