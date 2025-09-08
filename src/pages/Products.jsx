@@ -30,10 +30,11 @@ const Products = () => {
   const [couponCategory, setCouponCategory] = useState("");
 
   const PRODUCTS_PER_PAGE = 4;
+  const BASE_URL = "https://best-electronic-bike-server-y888.vercel.app";
 
   const getImageUrl = (path) => {
     if (path.startsWith("/assets/")) {
-      return `https://best-electronic-bike-server-y888.vercel.app/${path}`;
+      return `${BASE_URL}${path}`;
     }
     return path;
   };
