@@ -97,7 +97,7 @@ const ProductDetails = () => {
     }
 
     // Limit to 6 products max for the slider
-    setRelatedProducts(related.slice(0, 6));
+    setRelatedProducts(related.slice(0, 9));
   };
 
   const nextImage = () => {
