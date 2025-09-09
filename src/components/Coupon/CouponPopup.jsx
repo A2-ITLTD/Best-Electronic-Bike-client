@@ -37,6 +37,7 @@ const CouponPopup = ({ category, onClose }) => {
         "500W brushless geared motor (750W peak)",
         "48V 7.8Ah (374Wh) removable lithium-ion battery",
       ],
+      alibabaUrl: "https://amzn.to/45QvIbc",
     },
     "Electric Bike": {
       id: "10",
@@ -57,6 +58,7 @@ const CouponPopup = ({ category, onClose }) => {
         "Peak 500W motor (350W rated)",
         "48V/7.8Ah battery, up to 40 miles range (Pedal-assist1)",
       ],
+      alibabaUrl: "https://amzn.to/41CmCwf",
     },
     "Electric Scooter": {
       id: "13",
@@ -77,6 +79,7 @@ const CouponPopup = ({ category, onClose }) => {
         "Range up to 19 miles per charge",
         "350W rear-wheel motor with sit-down design",
       ],
+      alibabaUrl: "https://amzn.to/4pckRjg",
     },
     "Folding Bike": {
       id: "20",
@@ -97,6 +100,7 @@ const CouponPopup = ({ category, onClose }) => {
         "Peak 1000W brushless geared motor",
         "48V 10.5Ah removable battery with up to 45-mile range",
       ],
+      alibabaUrl: "https://amzn.to/45V6x7y",
     },
     "Commuter Bike": {
       id: "23",
@@ -117,6 +121,7 @@ const CouponPopup = ({ category, onClose }) => {
         "Peak 750W brushless motor with top speed 20 MPH",
         "360Wh removable lithium battery, 25-40 miles range",
       ],
+      alibabaUrl: "https://amzn.to/469P3mu",
     },
     "Fat Tire Electric Bike": {
       id: "4",
@@ -138,6 +143,7 @@ const CouponPopup = ({ category, onClose }) => {
         "Peak 800W motor with max speed up to 22 MPH",
         "48V 10.4Ah battery, range: 20 miles pure electric / 60 miles pedal-assist",
       ],
+      alibabaUrl: "https://amzn.to/4mQaHDp",
     },
     "Hybrid Bike": {
       id: "32",
@@ -159,6 +165,7 @@ const CouponPopup = ({ category, onClose }) => {
         "27.5-inch wheels for riders 5'8\" to 6'4\"",
         "Integrated 288Wh downtube battery with up to 35 miles range",
       ],
+      alibabaUrl: "https://amzn.to/4g8mlHi",
     },
     "All Terrain Electric Bike": {
       id: "72",
@@ -180,6 +187,7 @@ const CouponPopup = ({ category, onClose }) => {
         "48V 20Ah removable lithium-ion battery, range 40-80 miles",
         "Front fork suspension for smooth riding",
       ],
+      alibabaUrl: "https://amzn.to/3I4TMxZ",
     },
     "City Electric Bike": {
       id: "46",
@@ -201,6 +209,7 @@ const CouponPopup = ({ category, onClose }) => {
         "48V 20AH hidden removable battery with 40-80 miles range",
         '26"x4" puncture-proof fat tires for all-terrain stability',
       ],
+      alibabaUrl: "https://amzn.to/4mQJOzj",
     },
     "Motorized Electric Bike": {
       id: "69",
@@ -222,6 +231,7 @@ const CouponPopup = ({ category, onClose }) => {
         "6061 aluminum frame for strength and longevity",
         "48V 14.5Ah removable battery with 30-45 miles range",
       ],
+      alibabaUrl: "https://amzn.to/4gdZcmP",
     },
     "Default Bike": {
       id: "33",
@@ -243,6 +253,7 @@ const CouponPopup = ({ category, onClose }) => {
         "Dual suspension system with 4 shock absorbers",
         "1200W peak motor with 25 mph top speed",
       ],
+      alibabaUrl: "https://amzn.to/3VAazfg",
     },
   };
 
@@ -400,7 +411,10 @@ const CouponPopup = ({ category, onClose }) => {
                     </div>
                   </div>
 
-                  <button className=" bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-2 rounded-lg text-sm flex items-center justify-center shadow-md hover:opacity-90">
+                  <button
+                    onClick={() => window.open(couponData.alibabaUrl, "_blank")}
+                    className=" bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-2 rounded-lg text-sm flex items-center justify-center shadow-md hover:opacity-90"
+                  >
                     <AiFillAmazonCircle className="h-4 w-4 mr-1" />
                     View Deal on Amazon
                     <ExternalLink className="h-3 w-3 ml-1" />
