@@ -247,14 +247,10 @@ const CouponPopup = ({ category, onClose }) => {
   };
 
   // Load matched coupons
-  // Load matched coupons
   useEffect(() => {
-    const activeCategory =
-      category && category !== "All" ? category : "Electric Bike";
-
-    if (activeCategory && activeCategory !== "All") {
+    if (category && category !== "All") {
       const matched = Object.values(products).filter(
-        (p) => p.category === activeCategory
+        (p) => p.category === category
       );
       setCouponList(matched);
     } else {

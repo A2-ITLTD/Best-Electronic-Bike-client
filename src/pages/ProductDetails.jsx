@@ -21,8 +21,10 @@ import {
   Users,
   StarHalf,
   ArrowRight,
+  ChevronLeft as LeftIcon,
+  ChevronRight as RightIcon,
 } from "lucide-react";
-import { fetchProduct } from "../services/api";
+import { fetchProduct, fetchProducts } from "../services/api";
 import { Helmet } from "react-helmet-async";
 
 const ProductDetails = () => {
@@ -30,6 +32,8 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const BASE_URL = "https://best-electronic-bike-server-y888.vercel.app";
 
@@ -46,6 +50,12 @@ const ProductDetails = () => {
       try {
         const data = await fetchProduct(id);
         setProduct(data || null);
+
+        // Once we have the product, fetch related products
+        if (data) {
+          const allProducts = await fetchProducts();
+          findRelatedProducts(data, allProducts.products || []);
+        }
       } catch (error) {
         console.error("Error fetching product:", error);
       } finally {
@@ -55,6 +65,40 @@ const ProductDetails = () => {
 
     getProduct();
   }, [id]);
+
+  const findRelatedProducts = (currentProduct, allProducts) => {
+    // Filter out the current product
+    const otherProducts = allProducts.filter((p) => p.id !== currentProduct.id);
+
+    // First, find products in the same category
+    let related = otherProducts.filter(
+      (p) => p.category === currentProduct.category
+    );
+
+    // If we don't have enough products from the same category (less than 3),
+    // add products from the same brand
+    if (related.length < 3) {
+      const sameBrandProducts = otherProducts.filter(
+        (p) =>
+          p.brand === currentProduct.brand &&
+          !related.some((rp) => rp.id === p.id)
+      );
+
+      related = [...related, ...sameBrandProducts];
+    }
+
+    // If we still don't have enough, just take the first few products
+    if (related.length < 3) {
+      const additionalProducts = otherProducts
+        .filter((p) => !related.some((rp) => rp.id === p.id))
+        .slice(0, 3 - related.length);
+
+      related = [...related, ...additionalProducts];
+    }
+
+    // Limit to 6 products max for the slider
+    setRelatedProducts(related.slice(0, 6));
+  };
 
   const nextImage = () => {
     setSelectedImageIndex((prev) =>
@@ -66,6 +110,27 @@ const ProductDetails = () => {
     setSelectedImageIndex((prev) =>
       prev === 0 ? (product?.images?.length || 1) - 1 : prev - 1
     );
+  };
+
+  // Related products slider navigation
+  const nextSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === Math.ceil(relatedProducts.length / 3) - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === 0 ? Math.ceil(relatedProducts.length / 3) - 1 : prev - 1
+    );
+  };
+
+  // Calculate discount percentage
+  const calculateDiscount = (originalPrice, price) => {
+    if (originalPrice > price) {
+      return Math.round(((originalPrice - price) / originalPrice) * 100);
+    }
+    return 0;
   };
 
   if (loading) {
@@ -90,6 +155,14 @@ const ProductDetails = () => {
       </div>
     );
   }
+
+  // Function to truncate title for related products
+  const truncateTitle = (title, maxLength = 60) => {
+    if (!title) return "Untitled Product";
+    if (title.length <= maxLength) return title;
+    return title.substring(0, maxLength) + "...";
+  };
+
   const SITE_URL = "https://best-electric-bike.vercel.app";
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-blue-50 py-6">
@@ -392,7 +465,7 @@ const ProductDetails = () => {
                   >
                     <span className="text-base mr-2">Buy at Amazon</span>
                     <svg
-                      className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
+                      className="w-4 w-4 group-hover:translate-x-0.5 transition-transform"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -491,6 +564,146 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+
+        {/* Related Products Section */}
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-12">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center">
+                <div className="w-2 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3"></div>
+                <h2 className="text-2xl font-bold text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  You May Also Like
+                </h2>
+              </div>
+              <div className="flex space-x-2">
+                <button
+                  onClick={prevSlide}
+                  className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+                >
+                  <LeftIcon className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+                >
+                  <RightIcon className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden group">
+              <div
+                className="flex transition-transform duration-500 ease-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {relatedProducts.map((relatedProduct) => {
+                  const discountPercentage = calculateDiscount(
+                    relatedProduct.originalPrice,
+                    relatedProduct.price
+                  );
+
+                  return (
+                    <div
+                      key={relatedProduct.id}
+                      className="w-1/3 flex-shrink-0 px-3"
+                    >
+                      <div
+                        className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-yellow-400 group/item"
+                        onClick={() =>
+                          window.open(relatedProduct.alibabaUrl, "_blank")
+                        }
+                      >
+                        <div className="h-38 overflow-hidden relative">
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 z-10"></div>
+                          <img
+                            src={getImageUrl(
+                              relatedProduct.images
+                                ? relatedProduct.images[0]
+                                : relatedProduct.image
+                            )}
+                            alt={relatedProduct.name}
+                            className="w-full h-full object-contain p-4 group-hover/item:scale-110 transition-transform duration-500"
+                          />
+
+                          {discountPercentage > 0 && (
+                            <div className="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg z-20 animate-pulse">
+                              🔥 Save {discountPercentage}%
+                            </div>
+                          )}
+
+                          {relatedProduct.bestseller && (
+                            <div className="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg z-20">
+                              ⭐ Bestseller
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="p-5">
+                          <h3 className="font-semibold text-gray-900 mb-3 text-sm  overflow-hidden group-hover/item:text-blue-600 transition-colors">
+                            {truncateTitle(relatedProduct.name)}
+                          </h3>
+
+                          <div className="flex items-center mb-3">
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`h-4 w-4 ${
+                                    i < Math.floor(relatedProduct.rating || 5)
+                                      ? "fill-yellow-400 text-yellow-400"
+                                      : "text-gray-300"
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                            <span className="text-xs text-gray-500 ml-2">
+                              ({relatedProduct.reviews || 0} reviews)
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-center mt-4 p-2 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border border-amber-200 group-hover/item:from-amber-100 group-hover/item:to-yellow-100 transition-all duration-300">
+                            <div className="flex items-center">
+                              <div className="relative">
+                                <img
+                                  src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
+                                  alt="Amazon"
+                                  className="h-5 mr-2 filter drop-shadow-md animate-bounce"
+                                  style={{ animationDuration: "2s" }}
+                                />
+                                <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                              </div>
+                              <span className="text-xs font-semibold text-amber-700">
+                                Prime Delivery
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Progress indicator */}
+              <div className="flex justify-center mt-6 space-x-2">
+                {Array.from({
+                  length: Math.ceil(relatedProducts.length / 3),
+                }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentSlide === index
+                        ? "bg-gradient-to-r from-blue-500 to-purple-600 w-8"
+                        : "bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Review Summary */}
         {product.reviewSummary && (

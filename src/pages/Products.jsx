@@ -20,10 +20,10 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 5000]);
-  const [sortBy, setSortBy] = useState("rating-high");
+  const [sortBy, setSortBy] = useState("reviews");
   const [viewMode, setViewMode] = useState("list");
   const [selectedImages, setSelectedImages] = useState({});
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Electric Bike");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageTitle, setPageTitle] = useState("2025 Best Electric Bikes");
   const [showCoupon, setShowCoupon] = useState(false);
@@ -111,7 +111,7 @@ const Products = () => {
         case "category":
           return (a?.category || "").localeCompare(b?.category || "");
         default:
-          return (b?.rating || 0) - (a?.rating || 0);
+          return (b?.reviews || 0) - (a?.rating || 0);
       }
     });
 
