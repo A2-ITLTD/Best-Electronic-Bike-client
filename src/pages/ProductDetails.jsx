@@ -320,7 +320,7 @@ const ProductDetails = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Product Images - More Compact */}
           <div className="lg:w-2/5">
-            <div className="relative bg-white rounded-xl overflow-hidden shadow-md p-3 mb-2 object-contain w-full">
+            <div className="relative bg-white rounded-xl overflow-hidden shadow-md p-3 mb-2 object-cover w-full">
               <div className="flex justify-center">
                 <img
                   src={getImageUrl(product.images[selectedImageIndex])}
@@ -565,8 +565,6 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* Related Products Section */}
-        {/* Related Products Section */}
         {relatedProducts.length > 0 && (
           <div className="mt-12">
             <div className="flex items-center justify-between mb-6">
@@ -606,7 +604,7 @@ const ProductDetails = () => {
                   return (
                     <div
                       key={relatedProduct.id}
-                      className="w-1/3 flex-shrink-0 px-3"
+                      className="w-full sm:w-1/2 md:w-1/3 flex-shrink-0 px-3"
                     >
                       <div
                         className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-yellow-400 group/item"
@@ -614,7 +612,7 @@ const ProductDetails = () => {
                           window.open(relatedProduct.alibabaUrl, "_blank")
                         }
                       >
-                        <div className="h-38 overflow-hidden relative">
+                        <div className="h-48 overflow-hidden relative">
                           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 z-10"></div>
                           <img
                             src={getImageUrl(
@@ -627,7 +625,7 @@ const ProductDetails = () => {
                           />
 
                           {discountPercentage > 0 && (
-                            <div className="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg z-20 animate-pulse">
+                            <div className="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg z-20">
                               🔥 Save {discountPercentage}%
                             </div>
                           )}
@@ -640,7 +638,7 @@ const ProductDetails = () => {
                         </div>
 
                         <div className="p-5">
-                          <h3 className="font-semibold text-gray-900 mb-3 text-sm  overflow-hidden group-hover/item:text-blue-600 transition-colors">
+                          <h3 className="font-semibold text-gray-900 mb-3 text-sm overflow-hidden group-hover/item:text-blue-600 transition-colors">
                             {truncateTitle(relatedProduct.name)}
                           </h3>
 
@@ -662,17 +660,36 @@ const ProductDetails = () => {
                             </span>
                           </div>
 
-                          <div className="flex items-center justify-center mt-4 p-2 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border border-amber-200 group-hover/item:from-amber-100 group-hover/item:to-yellow-100 transition-all duration-300">
+                          <div className="flex items-center justify-between mt-4 p-3">
+                            {/* Glowing text with pulse animation */}
+                            <span
+                              className="text-sm font-bold text-blue-500"
+                              style={{
+                                textShadow:
+                                  "0 0 1px #3b82f6, 0 0 12px #2563eb, 0 0 18px #1d4ed8",
+                              }}
+                            >
+                              Check Price on Amazon
+                            </span>
+
+                            {/* Arrow pointing down */}
+                            <div className="text-blue-400">
+                              <svg
+                                className="w-5 h-5 animate-bounce"
+                                fill="currentColor"
+                              >
+                                <path d="M7 10l5 5 5-5z" />
+                              </svg>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-center p-2 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border border-amber-200 group-hover/item:from-amber-100 group-hover/item:to-yellow-100 transition-all duration-300">
                             <div className="flex items-center">
-                              <div className="relative">
-                                <img
-                                  src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-                                  alt="Amazon"
-                                  className="h-5 mr-2 filter drop-shadow-md animate-bounce"
-                                  style={{ animationDuration: "2s" }}
-                                />
-                                <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
-                              </div>
+                              <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
+                                alt="Amazon"
+                                className="h-5 mr-2 filter drop-shadow-md"
+                              />
                               <span className="text-xs font-semibold text-amber-700">
                                 Prime Delivery
                               </span>
@@ -702,6 +719,28 @@ const ProductDetails = () => {
                 ))}
               </div>
             </div>
+
+            {/* Inline styles for animations */}
+            <style>
+              {`
+        @keyframes bounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+        @keyframes pulse {
+          0%, 100% {
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+          }
+          50% {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.8), 0 0 30px rgba(245, 158, 11, 0.6);
+          }
+        }
+      `}
+            </style>
           </div>
         )}
 
