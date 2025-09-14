@@ -30,18 +30,23 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4 text-white">
               Quick Links
             </h3>
-            <ul className="space-y-3">
-              {["Home", "Products", "About", "Contact"].map((item, idx) => (
+            <ul className="space-y-0.5">
+              {[
+                { name: "Home", path: "/" },
+                { name: "Products", path: "/products" },
+                { name: "Contact", path: "/contact" },
+                { name: "Privacy Policy", path: "/privacypolicy" },
+                {
+                  name: "Amazon Affiliate Advertiser Disclosure",
+                  path: "/amazonaffiliateadvertiserdisclosure",
+                },
+              ].map((item, idx) => (
                 <li key={idx}>
                   <a
-                    href={
-                      item === "Home"
-                        ? "/"
-                        : `/${item.toLowerCase().replace(/\s+/g, "")}`
-                    }
+                    href={item.path}
                     className="text-gray-300 hover:text-white hover:pl-2 transition-all duration-200 inline-block"
                   >
-                    {item}
+                    {item.name}
                   </a>
                 </li>
               ))}
@@ -64,7 +69,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 hover:text-white transition">
                 <MapPin className="h-5 w-5 text-yellow-400" />
-                <span>532 Stone Rd Suite F Benicia, CA 94510</span>
+                <span>532 Stone Rd Suite F Benicia, CA 94510</span>
               </div>
             </div>
           </div>

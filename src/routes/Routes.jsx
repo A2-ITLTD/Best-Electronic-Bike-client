@@ -12,6 +12,8 @@ import PostDetails from "../pages/Blog/PostDetails";
 import About from "../pages/About";
 import Contact from "./../pages/Contact";
 import ScrollToTop from "../components/Shared/ScrollToTop";
+import PrivacyPolicy from "./../pages/PrivacyPolicy";
+import AmazonAffiliateAdvertiserDisclosure from "../pages/AmazonAffiliateAdvertiserDisclosure";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +59,14 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/privacypolicy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "/amazonaffiliateadvertiserdisclosure",
+        element: <AmazonAffiliateAdvertiserDisclosure />,
       },
     ],
   },
